@@ -1,0 +1,16 @@
+# ignore files with below extensions
+*.pyc
+*.pyo
+*.log
+*.sqlite3
+
+# ignore below files
+.coverage
+yarn.lock
+package-lock.json
+.env.secrets
+
+# ignore below directories
+__pycache__/
+node_modules/
+.pytest_cache/
