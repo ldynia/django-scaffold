@@ -1,0 +1,7 @@
+# Instructions
+
+```bash
+
+$ docker-compose
+
+```
