@@ -2,9 +2,9 @@ version: "3.8"
 services:
   webapp:
     build: .
+    image: django/hello-world
     container_name: demo
     hostname: demo
     volumes:
        - ./app:/app
     command: /app/scripts/startup.sh
-
