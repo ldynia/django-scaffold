@@ -4,7 +4,7 @@ services:
     build: ./docker  
     image: django/gql-scaffold
     container_name: scaffold
-    hostname: scaffold
+    hostname: dev
     volumes:
        - ./app:/app
     command: /app/scripts/startup.sh
