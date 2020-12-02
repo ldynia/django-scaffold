@@ -1,6 +1,9 @@
 #!/bin/ash
 
+echo "Install requirements.txt"
 pip install -r /app/requirements.txt --no-cache-dir
 
-python /app/manage.py migrate
+echo "Run server"
+# python /app/manage.py migrate
+# python /app/manage.py createsuperuser
 python /app/manage.py runserver 0.0.0.0:8000

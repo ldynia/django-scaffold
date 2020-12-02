@@ -1,13 +1,15 @@
 FROM python:3.7.9-alpine
 
-# Create exec:exec  999:999 and fixed python permissions
-RUN sed -i '/999/d;' /etc/group
-RUN addgroup -S -g 999 exec && adduser -u 999 -SDHG exec exec
-RUN chown -R 999:999 /usr/local/bin/ /usr/local/lib/python3.7/
+WORKDIR /app
 
 ENV PYTHONUNBUFFERED=True
 ENV PYTHONIOENCODING=UTF-8
 
-WORKDIR /app
+# Create exec:exec and dev -fixed python permissions
+RUN sed -i '/999/d;' /etc/group
+RUN addgroup -S -g 999 exec && adduser -u 999 -SDHG exec exec
+RUN adduser -DH dev && adduser exec dev
+RUN chown -R 999:999 /usr/local/bin/ /usr/local/lib/python3.7/
+RUN chown -R dev:dev /app
 
 USER exec

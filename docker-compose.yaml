@@ -2,9 +2,9 @@ version: "3.8"
 services:
   webapp:
     build: ./docker  
-    image: django/gql-scaffold
-    container_name: scaffold
-    hostname: dev
+    image: django/demo
+    container_name: django-demo
+    hostname: django-dev-demo
     volumes:
        - ./app:/app
     command: /app/scripts/startup.sh
