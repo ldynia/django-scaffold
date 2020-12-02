@@ -10,6 +10,6 @@ RUN sed -i '/999/d;' /etc/group
 RUN addgroup -S -g 999 exec && adduser -u 999 -SDHG exec exec
 RUN adduser -DH dev && adduser exec dev
 RUN chown -R 999:999 /usr/local/bin/ /usr/local/lib/python3.7/
-RUN chown -R dev:dev /app
+RUN chown -R exec:dev /app
 
-USER exec
+USER exec:dev
