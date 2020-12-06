@@ -1,2 +1,4 @@
 Django
+graphene-django
+graphene-django-extras
 jinja2
