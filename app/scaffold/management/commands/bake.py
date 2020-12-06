@@ -5,7 +5,7 @@ from jinja2 import Environment, FileSystemLoader
 
 
 class Command(BaseCommand):
-    help = 'Welcome to scaffold bakery.'
+    help = 'Application scaffold'
 
     def add_arguments(self, parser):
         parser.add_argument('app', nargs=1, type=str)
