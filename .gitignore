@@ -4,6 +4,10 @@
 *.log
 *.sqlite3
 
+# Shell
+.ash_history
+.bash_history
+
 # ignore below files
 .coverage
 yarn.lock

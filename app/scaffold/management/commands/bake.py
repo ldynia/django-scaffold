@@ -29,7 +29,6 @@ class Command(BaseCommand):
         template_file = f"{template_dir}/{template_name}"
         output_path = options.get('output-file-path')[0]
 
-        # Validate user input
         valid_input = self.validate(output_path, template_file)
         if valid_input:
             data = {
