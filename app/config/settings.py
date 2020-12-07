@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'graphene_django',
     'scaffold.apps.ScaffoldConfig',
+    'demo.apps.DemoConfig',
 ]
 
 MIDDLEWARE = [
