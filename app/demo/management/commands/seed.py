@@ -30,10 +30,11 @@ class Command(BaseCommand):
             charset = string.ascii_uppercase + string.digits
             name = ''.join(random.SystemRandom().choice(charset) for _ in range(5))
             
+            day = random.randint(1, 31)
             weekday = random.choice(WEEKDAY)
             month = random.choice(MONTH)
             year = random.randint(1800, 2020)
 
-            Dummy.objects.get_or_create(name=name, weekday=weekday, month=month, year=year)
+            Dummy.objects.get_or_create(name=name, day=day, weekday=weekday, month=month, year=year)
         
         print(self.style.SUCCESS('Seeding done'))
