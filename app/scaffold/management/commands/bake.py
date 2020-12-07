@@ -29,25 +29,32 @@ class Command(BaseCommand):
         template_file = f"{template_dir}/{template_name}"
         output_path = options.get('output-file-path')[0]
 
-        self.validate(template_file, output_path)
-
-        env = Environment(loader=FileSystemLoader(template_dir))
-        template = env.get_template(template_name)
-        
-        with open(output_path, "w") as file:
-            file.write(template.render({
+        # Validate user input
+        valid_input = self.validate(output_path, template_file)
+        if valid_input:
+            data = {
                 'app': options.get('app')[0],
                 'model': options.get('model')[0]
-            }))
+            }
+            self.write(output_path, template_dir, template_name, **data)
         
         print(self.style.SUCCESS('Baking done'))
 
-    def validate(self, template_file, output_path):
+    def validate(self, output_path, template_file):
+
         try:
             output_dir = '/'.join(output_path.split('/')[:-1])
             assert os.path.exists(output_dir), f"Dir {output_dir} doesn't exist!"
             assert os.access(output_dir, os.W_OK), f"Dir {output_dir} isn't writable!"
             assert os.path.isfile(template_file), f"File {template_file} isn't a file!"
+            return True
         except AssertionError as err:
             print(self.style.ERROR(err))
-            exit()
+            return False
+    
+    def write(self, output_path, template_dir, template_name, **data):
+        env = Environment(loader=FileSystemLoader(template_dir))
+        template = env.get_template(template_name)
+
+        with open(output_path, "w") as file:
+            file.write(template.render(data))
