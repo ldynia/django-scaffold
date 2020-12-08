@@ -35,12 +35,19 @@ class Command(BaseCommand):
                 'app': options.get('app')[0],
                 'model': options.get('model')[0]
             }
-            self.write(output_path, template_dir, template_name, **data)
+            templ_str = self.generate_template(template_dir, template_name, **data)
+            
+            self.write_template(output_path, templ_str)
         
         print(self.style.SUCCESS('Baking done'))
 
-    def validate(self, output_path, template_file):
+    def generate_template(self, template_dir, template_name, **data):
+        env = Environment(loader=FileSystemLoader(template_dir))
+        template = env.get_template(template_name)
 
+        return template.render(data)
+
+    def validate(self, output_path, template_file):
         try:
             output_dir = '/'.join(output_path.split('/')[:-1])
             assert os.path.exists(output_dir), f"Dir {output_dir} doesn't exist!"
@@ -51,9 +58,6 @@ class Command(BaseCommand):
             print(self.style.ERROR(err))
             return False
     
-    def write(self, output_path, template_dir, template_name, **data):
-        env = Environment(loader=FileSystemLoader(template_dir))
-        template = env.get_template(template_name)
-
+    def write_template(self, output_path, template_str):
         with open(output_path, "w") as file:
-            file.write(template.render(data))
+            file.write(template_str)
