@@ -9,4 +9,4 @@ services:
     hostname: django-dev-demo
     volumes:
        - ./app:/app
-    command: sleep 3600
+    # command: sleep 3600
