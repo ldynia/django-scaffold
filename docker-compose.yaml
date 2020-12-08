@@ -1,10 +1,12 @@
 version: "3.8"
 services:
   webapp:
-    build: ./docker  
+    build:
+      context: ./app
+      dockerfile: ../docker/Dockerfile
     image: django/demo
     container_name: django-demo
     hostname: django-dev-demo
     volumes:
        - ./app:/app
-    command: /app/scripts/startup.sh
+    command: sleep 3600
