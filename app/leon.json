@@ -1,0 +1,11 @@
+{
+    "apps": [
+        {
+            "name": "demo",
+            "models": [
+                "path": "models.py"
+                "models": ["Dummy"]
+            ] 
+        }
+    ]
+}

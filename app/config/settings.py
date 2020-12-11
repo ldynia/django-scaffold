@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'graphene_django',
-    'scaffold.apps.ScaffoldConfig',
+    'leon.apps.LeonConfig',
     'demo.apps.DemoConfig',
 ]
 
