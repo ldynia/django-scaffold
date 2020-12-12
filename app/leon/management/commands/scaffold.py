@@ -4,11 +4,12 @@ from django.core.management.base import BaseCommand, CommandError
 from jinja2 import Environment, FileSystemLoader
 
 from config.settings import BASE_DIR
-from leon.constants import ASCII_ART
+from leon.constants import SEQUENCE
+from leon.utilities import animate
 
 class Command(BaseCommand):
-    print(ASCII_ART) 
-    print("Graphql API bakery!\n") 
+    animate(SEQUENCE)
+    print("Ultimate GraphQL API bakery!\n")
 
     def add_arguments(self, parser):
         parser.add_argument('--app', type=str, help='Application name.')
