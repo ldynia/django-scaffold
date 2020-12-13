@@ -1,4 +1,5 @@
 Django
+django-subcommands
 graphene-django
 graphene-django-extras
 jinja2

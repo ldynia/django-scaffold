@@ -7,9 +7,8 @@ from config.settings import BASE_DIR
 from leon.constants import SEQUENCE
 from leon.utilities import animate
 
-class Command(BaseCommand):
-    animate(SEQUENCE)
-    print("Ultimate GraphQL API bakery!\n")
+class ScaffoldCommand(BaseCommand):
+    help = 'GraphQL API bakery.'
 
     def add_arguments(self, parser):
         parser.add_argument('--app', type=str, help='Application name.')
