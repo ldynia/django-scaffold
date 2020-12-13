@@ -2,23 +2,35 @@ import os
   
 from django.core.management.base import BaseCommand, CommandError
 from jinja2 import Environment, FileSystemLoader
+from termcolor import colored, cprint
 
 from config.settings import BASE_DIR
-from leon.constants import SEQUENCE
-from leon.utilities import animate
+from leon.validators import (valid_arg, app_exist)
+
+
+def validate_args(**options):
+    app = options.get('app')
+    if not valid_arg(app):
+        return False, 'Missing required argument app.'
+        
+    if not app_exist(app):
+        return False, f'Application "{app}" is not installed. '
+
 
 class ScaffoldCommand(BaseCommand):
     help = 'GraphQL API bakery.'
 
     def add_arguments(self, parser):
-        parser.add_argument('--app', type=str, help='Application name.')
+        parser.add_argument('app', type=str, default=None, help='Application name.', nargs='?')
         parser.add_argument('--config', type=str, default=f'{BASE_DIR}/leon.js', help='Path to leon.json config.')
         parser.add_argument('--overwrite', type=bool, default=False, help='Overwrite existing scaffolds.')
         parser.add_argument('--template-dir', type=str, default=f'{BASE_DIR}/leon/templates', help='Path to tamplates directory.')
     
     def handle(self, *args, **options):
-        print('options', options)
-        pass
+        valid, error = validate_args(**options)
+        if not valid:
+            cprint(error, 'yellow')
+        
         # template_name = options.get('template_name')
         # template_file = f"{template_dir}/{template_name}"
 
