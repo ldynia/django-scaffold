@@ -12,6 +12,6 @@ class DocsCommand(BaseCommand):
     help = "Leon CLI's API."
 
     def handle(self, *args, **options):
-        animate(SEQUENCE, delay=0.3)
+        animate(SEQUENCE, delay=0.2)
         print("Ultimate GraphQL API bakery!\n")
         os.system(f"python {BASE_DIR}/manage.py leon --help")

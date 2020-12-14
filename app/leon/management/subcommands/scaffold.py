@@ -5,16 +5,7 @@ from jinja2 import Environment, FileSystemLoader
 from termcolor import colored, cprint
 
 from config.settings import BASE_DIR
-from leon.validators import (valid_arg, app_exist)
-
-
-def validate_args(**options):
-    app = options.get('app')
-    if not valid_arg(app):
-        return False, 'Missing required argument app.'
-        
-    if not app_exist(app):
-        return False, f'Application "{app}" is not installed. '
+from leon.validators import validate_options
 
 
 class ScaffoldCommand(BaseCommand):
@@ -22,15 +13,23 @@ class ScaffoldCommand(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('app', type=str, default=None, help='Application name.', nargs='?')
+        parser.add_argument('models', type=str, default=None, help='Model name(s)', nargs='*')
+        
+        parser.add_argument('--model-filename', type=str, default='models.py', help='Path to a file where model is defined.')
+        parser.add_argument('--model-dir-path', type=str, default=None, help='Path to a file where model is defined.')
+        
         parser.add_argument('--config', type=str, default=f'{BASE_DIR}/leon.js', help='Path to leon.json config.')
         parser.add_argument('--overwrite', type=bool, default=False, help='Overwrite existing scaffolds.')
+        
         parser.add_argument('--template-dir', type=str, default=f'{BASE_DIR}/leon/templates', help='Path to tamplates directory.')
     
+
     def handle(self, *args, **options):
-        valid, error = validate_args(**options)
+        valid, errors = validate_options(**options)
         if not valid:
-            cprint(error, 'yellow')
-        
+            for err in errors:
+                cprint(err, 'yellow')
+
         # template_name = options.get('template_name')
         # template_file = f"{template_dir}/{template_name}"
 
