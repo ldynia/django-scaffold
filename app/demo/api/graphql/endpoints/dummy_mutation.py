@@ -5,7 +5,7 @@ from demo.api.graphql.common.types import DummyType
 
 
 # TODO: Step 5 Create this file
-class UpdateDummyMutation(graphene.Mutation):
+class UpdateDummy(graphene.Mutation):
 
     # Response argument
     dummy = graphene.Field(DummyType)
@@ -21,14 +21,15 @@ class UpdateDummyMutation(graphene.Mutation):
     def mutate(cls, root, info, id, **data):
         try:
             dummy = Dummy.objects.get(id=id)
-            dummy.update(data)
+            if Dummy.objects.filter(id=id).update(**data):
+                dummy = Dummy.objects.get(id=id)
         except Dummy.DoesNotExist:
             return cls(dummy=None)
         
         return cls(dummy=dummy)
 
 
-class CreateDummyMutation(graphene.Mutation):
+class CreateDummy(graphene.Mutation):
 
     # Response argument
     dummy = graphene.Field(DummyType)
@@ -50,7 +51,7 @@ class CreateDummyMutation(graphene.Mutation):
         return cls(dummy=dummy)
 
 
-class DeleteDummyMutation(graphene.Mutation):
+class DeleteDummy(graphene.Mutation):
 
     # Response argument
     dummy = graphene.Field(DummyType)
@@ -66,10 +67,10 @@ class DeleteDummyMutation(graphene.Mutation):
         except Dummy.DoesNotExist:
             return cls(dummy=None)
         
-        return cls(dummy=dummy)
+        return cls(dummy=None)
 
 
 class DummyMutations(graphene.ObjectType):
-    create_dummy = CreateDummyMutation.Field()
-    update_dummy = UpdateDummyMutation.Field()
-    delete_dummy = DeleteDummyMutation.Field()
+    create_dummy = CreateDummy.Field()
+    update_dummy = UpdateDummy.Field()
+    delete_dummy = DeleteDummy.Field()
