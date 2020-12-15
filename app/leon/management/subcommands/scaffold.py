@@ -1,8 +1,8 @@
 import os
   
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from jinja2 import Environment, FileSystemLoader
-from termcolor import colored, cprint
+from termcolor import cprint
 
 from config.settings import BASE_DIR
 from leon.validators import validate_options
