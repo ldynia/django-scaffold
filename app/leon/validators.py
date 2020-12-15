@@ -1,7 +1,12 @@
 import os
+from importlib import import_module
+
+from django.db.models import Model as DjangoModel
 
 from config.settings import BASE_DIR
 from config.settings import INSTALLED_APPS
+from leon.utilities import camel_to_snake
+from leon.utilities import model_to_import_path
 
 
 def valid_app_arg(**options):
@@ -15,7 +20,7 @@ def valid_app_arg(**options):
 
     return valid, error
 
-def valid_model_arg(**options):
+def valid_models_arg(**options):
     valid = True
     error = ''
 
@@ -44,7 +49,6 @@ def valid_model_path(**options):
     error = ''
 
     app = options.get('app')
-    models = options.get('models')
     filename = options.get('model_filename')
     dir_path = options.get('model_dir_path')
     
@@ -55,14 +59,35 @@ def valid_model_path(**options):
     
     if not os.path.exists(model_path):
         valid = False
-        error =  f"Model path {model_path} doesn't exist!"
+        error = f"Model path {model_path} doesn't exist!"
 
     return valid, error
 
 
 def valid_model(**options):
-    # TODO: Import model and check that it's djamgo model isinstane)_
-    pass
+    valid = True
+    error = ''
+
+    app = options.get('app')
+    models = options.get('models')
+    filename = options.get('model_filename')
+    dir_path = options.get('model_dir_path')
+    
+    if dir_path:
+        model_path = f'{dir_path}/{filename}'
+    else:
+        model_path = f'{BASE_DIR}/{app}/{filename}'
+
+    for model in models:
+        model_import_path = model_to_import_path(model, model_path)
+        try:
+            exec(model_import_path)
+        except ImportError:
+            valid = False
+            error = f'Cannot import {model} model path: {model_import_path}'
+
+    return valid, error
+
 
 def validate_options(**options):
     errors = []
@@ -70,27 +95,27 @@ def validate_options(**options):
 
     valid, msg = valid_app_arg(**options)
     if not valid:
-        valid_opns = False  
+        valid_opns = False
         errors.append(msg)
     
-    valid, msg = valid_model_arg(**options)
-    if not valid:  
-        valid_opns = False  
+    valid, msg = valid_models_arg(**options)
+    if not valid:
+        valid_opns = False
         errors.append(msg)
     
     valid, msg = app_exist(**options)
     if not valid:
-        valid_opns = False  
+        valid_opns = False
         errors.append(msg)
 
     valid, msg = valid_model_path(**options)
     if not valid:
-        valid_opns = False  
+        valid_opns = False
         errors.append(msg)
     
     valid, msg = valid_model(**options)
     if not valid:
-        valid_opns = False  
+        valid_opns = False
         errors.append(msg)
 
     return valid_opns, errors

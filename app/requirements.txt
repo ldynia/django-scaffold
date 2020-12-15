@@ -3,3 +3,4 @@ django-subcommands
 graphene-django
 graphene-django-extras
 jinja2
+termcolor
