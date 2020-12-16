@@ -3,7 +3,6 @@ from graphene_django import DjangoObjectType
 from demo.models import Dummy
 
 
-# TODO: Step 4 crate this file
 class DummyType(DjangoObjectType):
 
     class Meta:

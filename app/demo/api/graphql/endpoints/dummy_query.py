@@ -4,8 +4,8 @@ from demo.models import Dummy
 from demo.api.graphql.common.types import DummyType
 
 
-# TODO: Step 5 Create this file
 class DummyQuery(graphene.ObjectType):
+    
     all_dummies = graphene.List(DummyType)
     get_dummy_by_id = graphene.Field(DummyType, id=graphene.ID(required=True))
 
@@ -17,4 +17,3 @@ class DummyQuery(graphene.ObjectType):
             return Dummy.objects.get(id=id)
         except Dummy.DoesNotExist:
             return None
-        

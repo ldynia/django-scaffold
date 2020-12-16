@@ -6,10 +6,8 @@ from demo.api.graphql.common.enums import WeekdayEnum
 from demo.api.graphql.common.enums import MonthEnum
 
 
-# TODO: Step 5 Create this file
 class CreateDummy(graphene.Mutation):
 
-    # Response argument
     ok = graphene.Boolean(default_value=True)
     dummy = graphene.Field(DummyType)
 
@@ -32,7 +30,6 @@ class CreateDummy(graphene.Mutation):
 
 class UpdateDummy(graphene.Mutation):
 
-    # Response argument
     ok = graphene.Boolean(default_value=True)
     dummy = graphene.Field(DummyType)
 
@@ -57,7 +54,6 @@ class UpdateDummy(graphene.Mutation):
 
 class DeleteDummy(graphene.Mutation):
 
-    # Response argument
     ok = graphene.Boolean(default_value=True)
 
     class Arguments:
