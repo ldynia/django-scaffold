@@ -2,31 +2,8 @@ import graphene
 
 from demo.models import Dummy
 from demo.api.graphql.common.types import DummyType
-
-
-class WeekdayEnum(graphene.Enum):
-    Monday = 'Monday'
-    Tuesday = 'Tuesday'
-    Wednesday = 'Wednesday'
-    Thursday = 'Thursday'
-    Friday = 'Friday'
-    Saturday = 'Saturday'
-    Sunday = 'Sunday'
-
-
-class MonthEnum(graphene.Enum):
-    January = 1
-    February = 2
-    March = 3
-    April = 4
-    May = 5
-    June = 6
-    July = 7
-    August = 8
-    September = 9
-    October = 10
-    November = 11
-    December = 12
+from demo.api.graphql.common.enums import WeekdayEnum
+from demo.api.graphql.common.enums import MonthEnum
 
 
 # TODO: Step 5 Create this file

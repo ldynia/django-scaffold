@@ -11,7 +11,6 @@ class DummyType(DjangoObjectType):
         # TODO generate this feelds
         fields = (
             "id",
-            "name",
             "day",
             "weekday",
             "month",
