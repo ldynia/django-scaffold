@@ -7,13 +7,16 @@ class DummyType(DjangoObjectType):
 
     class Meta:
         model = Dummy
-        # TODO generate this feelds
+        description = 'Type definition for a single dummy.'
+
+        # TODO generate this fields
         fields = (
-            "id",
-            "day",
-            "weekday",
-            "month",
-            "year",
-            "created_at",
-            "updated_at",
+            'id',
+            'day',
+            'weekday',
+            'month',
+            'year',
+            'pre_seeded',
+            'created_at',
+            'updated_at',
         )

@@ -27,11 +27,11 @@ class Command(BaseCommand):
         print(self.style.SUCCESS('Seeding start'))
         
         for _ in range(1000):
-            day = random.randint(1, 31)
-            weekday = random.choice(WEEKDAY)
-            month = random.choice(MONTH)
-            year = random.randint(1800, 2020)
+            d = random.randint(1, 31)
+            w = random.choice(WEEKDAY)
+            m = random.choice(MONTH)
+            y = random.randint(1800, 2020)
 
-            Dummy.objects.get_or_create(day=day, weekday=weekday, month=month, year=year)
+            Dummy.objects.get_or_create(pre_seeded=True, day=d, weekday=w, month=m, year=y)
         
         print(self.style.SUCCESS('Seeding done'))

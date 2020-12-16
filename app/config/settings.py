@@ -111,3 +111,12 @@ STATIC_URL = '/static/'
 
 # TODO: Step 2
 GRAPHENE = {"SCHEMA": "config.schema.schema"}
+
+# TODO: Step 2a
+GRAPHENE_DJANGO_EXTRAS = {
+    'DEFAULT_PAGINATION_CLASS': 'graphene_django_extras.paginations.LimitOffsetGraphqlPagination',
+    'DEFAULT_PAGE_SIZE': 10,
+    'MAX_PAGE_SIZE': 50,
+    'CACHE_ACTIVE': True,
+    'CACHE_TIMEOUT': 10    # seconds
+}
