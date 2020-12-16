@@ -1,8 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import Group
 
 
-class Dummy(Group):
+class Dummy(models.Model):
     day = models.IntegerField()
     weekday = models.CharField(max_length=16)
     month = models.CharField(max_length=16)
