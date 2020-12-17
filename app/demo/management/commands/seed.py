@@ -1,3 +1,4 @@
+import math
 import random
 
 from django.core.management.base import BaseCommand
@@ -24,14 +25,15 @@ class Command(BaseCommand):
         pass
    
     def handle(self, *args, **options):
-        print(self.style.SUCCESS('Seeding start'))
-        
-        for _ in range(1000):
+        LIMIT = 1000
+        for i in range(LIMIT):
             d = random.randint(1, 31)
             w = random.choice(WEEKDAY)
             m = random.choice(MONTH)
             y = random.randint(1800, 2020)
 
             Dummy.objects.get_or_create(pre_seeded=True, day=d, weekday=w, month=m, year=y)
-        
-        print(self.style.SUCCESS('Seeding done'))
+
+            progress = math.ceil((i/LIMIT) * 100)
+            print(f'\rProgress: {progress} %', end='')
+        print()

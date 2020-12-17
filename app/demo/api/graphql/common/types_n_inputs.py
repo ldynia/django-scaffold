@@ -4,23 +4,6 @@ from graphene_django_extras.paginations import LimitOffsetGraphqlPagination
 from demo.models import Dummy
 
 
-import django_filters as filters
-
-
-class DummyFilterSet(filters.FilterSet):
-    class Meta:
-        model = Dummy
-        fields = {
-            'id': ('exact',),
-            'day': ('icontains', 'iexact'),
-            'weekday': ('icontains', 'iexact'),
-            'month': ('icontains', 'iexact'),
-            'year': ('icontains', 'iexact'),
-            'pre_seeded': ('exact',),
-            'created_at': ('icontains', 'iexact'),
-            'updated_at': ('icontains', 'iexact'),
-        }
-
 class DummyType(DjangoObjectType):
 
     class Meta:

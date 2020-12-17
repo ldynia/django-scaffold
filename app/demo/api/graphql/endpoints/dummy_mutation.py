@@ -1,9 +1,9 @@
 import graphene
 
 from demo.models import Dummy
-from demo.api.graphql.common.types import DummyType
 from demo.api.graphql.common.enums import WeekdayEnum
 from demo.api.graphql.common.enums import MonthEnum
+from demo.api.graphql.common.types_n_inputs import DummyType
 
 
 class CreateDummy(graphene.Mutation):
