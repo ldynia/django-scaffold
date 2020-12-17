@@ -1,19 +1,11 @@
 import graphene
+from graphene_django_extras import DjangoObjectField, DjangoListObjectField, DjangoFilterPaginateListField, DjangoFilterListField, LimitOffsetGraphqlPagination
 
-from demo.models import Dummy
 from demo.api.graphql.common.types import DummyType
+from demo.api.graphql.common.types import DummyListType
+from demo.api.graphql.common.types import DummyFilterSet
 
 
 class DummyQuery(graphene.ObjectType):
-    
-    all_dummies = graphene.List(DummyType)
-    get_dummy_by_id = graphene.Field(DummyType, id=graphene.ID(required=True))
-
-    def resolve_all_dummies(root, info):
-        return Dummy.objects.all()
-    
-    def resolve_get_dummy_by_id(root, info, id):
-        try:
-            return Dummy.objects.get(id=id)
-        except Dummy.DoesNotExist:
-            return None
+    dummy_by_id = DjangoObjectField(DummyType, description='Single User query')
+    all_dummies = DjangoListObjectField(DummyListType, description='All Users query')
