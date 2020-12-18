@@ -1,5 +1,7 @@
-from graphene_django_extras import DjangoObjectType, DjangoListObjectType, DjangoInputObjectType
-from graphene_django_extras.paginations import LimitOffsetGraphqlPagination
+from graphene_django_extras import DjangoListObjectType
+from graphene_django_extras import DjangoObjectType
+from graphene_django_extras import DjangoSerializerMutation
+from rest_framework import serializers
 
 from demo.models import Dummy
 
@@ -19,7 +21,6 @@ class DummyType(DjangoObjectType):
             'created_at': ('icontains', 'iexact'),
             'updated_at': ('icontains', 'iexact'),
         }
-        exclude_fields: {}
 
 
 class DummyListType(DjangoListObjectType):
@@ -37,11 +38,17 @@ class DummyListType(DjangoListObjectType):
             'created_at': ('icontains', 'iexact'),
             'updated_at': ('icontains', 'iexact'),
         }
-        exclude_fields: {}
 
 
-class DummyInput(DjangoInputObjectType):
+class DummySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Dummy
-        description = "Dummy InputType definition to dummy as input on an Arguments class on traditional Mutations"
+        fields = ['day', 'weekday', 'month', 'year', 'pre_seeded']
+
+
+class DummySerializerMutation(DjangoSerializerMutation):
+    
+    class Meta:
+        serializer_class = DummySerializer
+        description = "Django Rest Framework serializer based Mutation for Dummy"
