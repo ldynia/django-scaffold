@@ -9,7 +9,7 @@ ENV PYTHONIOENCODING=UTF-8
 
 # Fixed permissions, create exec:exec and dev:dev
 RUN sed -i '/999/d;' /etc/group
-RUN addgroup -S -g 999 exec && adduser -u 999 -SDHG exec exec
+RUN addgroup -S -g 999 exec && adduser -u 999 -s /sbin/nologin -SDHG exec exec
 RUN adduser -DH dev && adduser exec dev
 RUN chown -R 999:999 /usr/local/bin/ /usr/local/lib/python3.7/
 
