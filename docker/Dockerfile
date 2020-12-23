@@ -13,6 +13,8 @@ RUN addgroup -S -g 999 exec && adduser -u 999 -s /sbin/nologin -SDHG exec exec
 RUN adduser -DH dev && adduser exec dev
 RUN chown -R 999:999 /usr/local/bin/ /usr/local/lib/python3.7/
 
+RUN chmod -R a-w /etc
+
 ADD --chown=exec:dev . /app
 WORKDIR /app
 
