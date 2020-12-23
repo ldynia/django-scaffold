@@ -1,5 +1,5 @@
 import graphene
-from graphene_django_extras import DjangoObjectField, DjangoListObjectField, DjangoFilterPaginateListField, DjangoFilterListField, LimitOffsetGraphqlPagination
+from graphene_django_extras import DjangoObjectField, DjangoListObjectField
 
 from demo.api.graphql.common.types_n_inputs import DummyType
 from demo.api.graphql.common.types_n_inputs import DummyListType
