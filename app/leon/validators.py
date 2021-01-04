@@ -1,8 +1,8 @@
 import os
+from django.apps import apps
 
 from config.settings import BASE_DIR
 from config.settings import INSTALLED_APPS
-from leon.utilities import model_to_import_path
 
 
 def valid_app_arg(**options):
@@ -16,6 +16,7 @@ def valid_app_arg(**options):
 
     return valid, error
 
+
 def valid_models_arg(**options):
     valid = True
     error = ''
@@ -26,6 +27,7 @@ def valid_models_arg(**options):
         error = 'Missing models argument!'
     
     return valid, error
+
 
 def app_exist(**options):
     valid = True
@@ -66,22 +68,30 @@ def valid_model(**options):
 
     app = options.get('app')
     models = options.get('models')
-    filename = options.get('model_filename')
-    dir_path = options.get('model_dir_path')
     
-    if dir_path:
-        model_path = f'{dir_path}/{filename}'
-    else:
-        model_path = f'{BASE_DIR}/{app}/{filename}'
-
     for model in models:
-        model_import_path = model_to_import_path(model, model_path)
         try:
-            exec(model_import_path)
-        except ImportError:
+            apps.get_model(app, model)
+        except LookupError as err:
             valid = False
-            error = f'Cannot import {model} model path: {model_import_path}'
+            error = err
 
+    return valid, error
+
+
+def validate_template(output_path, template_file):
+    valid = True
+    error = ''
+    try:
+        output_dir = '/'.join(output_path.split('/')[:-1])
+        assert os.path.exists(output_dir), f"Dir {output_dir} doesn't exist!"
+        assert os.access(output_dir, os.W_OK), f"Dir {output_dir} isn't writable!"
+        assert os.path.isfile(template_file), f"File {template_file} isn't a file!"
+        return True
+    except AssertionError as err:
+        valid = False
+        error = err
+    
     return valid, error
 
 
