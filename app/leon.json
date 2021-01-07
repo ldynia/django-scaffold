@@ -10,8 +10,8 @@
       ],
       "name": "demo",
       "options": {
-        "blueprints_dir": "/app/demo/api/graphql/blueprints",
-        "output_dir": "/app/demo/api/graphql"
+        "blueprints_dir": "/app/demo/api/blueprints",
+        "output_dir": "/app/demo/api"
       }
     }
   ]

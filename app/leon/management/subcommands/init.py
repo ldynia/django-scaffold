@@ -34,7 +34,7 @@ class InitCommand(BaseCommand):
     def create_json_init(self, **options):
         APP = options.get('app')
         MODEL = options.get('models')[0]
-        APP_OUTPUT_DIR = f"{BASE_DIR}/{APP}/api/graphql"
+        APP_OUTPUT_DIR = f"{BASE_DIR}/{APP}/api"
         APP_BLUEPRINTS_DIR = f"{APP_OUTPUT_DIR}/blueprints"
         MODEL_FILENAME = options.get('model_filename')
         MODEL_PATH = f'{BASE_DIR}/{APP}/{MODEL_FILENAME}'

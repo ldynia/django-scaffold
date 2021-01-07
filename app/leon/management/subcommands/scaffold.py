@@ -57,7 +57,7 @@ class ScaffoldCommand(BaseCommand):
             
         #     self.write_template(output_path, templ_str)
         
-        cprint(f'Baking done! Check {output_path}', 'green')
+        cprint(f'Baking done!', 'green')
 
     
     def generate_template(self, template_dir, template_name, **data):
