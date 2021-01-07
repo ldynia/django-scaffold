@@ -1,6 +1,6 @@
 import graphene
 
-from demo.api.graphql.common.types_n_inputs import DummySerializerMutation
+from demo.api.graphql.endpoints.dummy_common import DummySerializerMutation
 
 
 class DummyMutations(graphene.ObjectType):
