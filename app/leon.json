@@ -1,1 +1,18 @@
-{"app": "demo", "options": {}, "model": "Dummy"}
+{
+  "apps": [
+    {
+      "models": [
+        {
+          "name": "Dummy",
+          "options": {},
+          "path": "/app/demo/models.py"
+        }
+      ],
+      "name": "demo",
+      "options": {
+        "blueprints_dir": "/app/demo/api/graphql/blueprints",
+        "output_dir": "/app/demo/api/graphql"
+      }
+    }
+  ]
+}

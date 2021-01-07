@@ -7,7 +7,7 @@ from config.settings import BASE_DIR
 from leon.validators import validate_options
 
 
-class SetupCommand(BaseCommand):
+class InitCommand(BaseCommand):
     
     help = "Create 'leon.json' from app and its model(s)."
     
@@ -32,11 +32,31 @@ class SetupCommand(BaseCommand):
 
 
     def create_json_init(self, **options):
-        init = json.dumps({
-            'app': options.get('app'),
-            'options': {},
-            'model': options.get('models')[0]
-        })
+        APP = options.get('app')
+        MODEL = options.get('models')[0]
+        APP_OUTPUT_DIR = f"{BASE_DIR}/{APP}/api/graphql"
+        APP_BLUEPRINTS_DIR = f"{APP_OUTPUT_DIR}/blueprints"
+        MODEL_FILENAME = options.get('model_filename')
+        MODEL_PATH = f'{BASE_DIR}/{APP}/{MODEL_FILENAME}'
+
+        init_json = json.dumps({
+            'apps':  [
+                {
+                    'name': APP,
+                    'options': {
+                        'output_dir': APP_OUTPUT_DIR,
+                        'blueprints_dir': APP_BLUEPRINTS_DIR,
+                    },
+                    'models': [
+                        {
+                            'name': MODEL,
+                            'path': MODEL_PATH, 
+                            'options': {},
+                        }
+                    ]
+                }
+            ],
+        }, indent=2, sort_keys=True)
 
         with open(f'{BASE_DIR}/leon.json', 'w') as file:
-            file.write(init)
+            file.write(init_json)

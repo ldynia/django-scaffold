@@ -14,6 +14,6 @@ class DocsCommand(BaseCommand):
     def handle(self, *args, **options):
         animate(SEQUENCE, delay=0.2)
         
-        print("Ultimate GraphQL API bakery!\n")
+        print("Ultimate Code bakery!\n")
         
         os.system(f"python {BASE_DIR}/manage.py leon --help")
