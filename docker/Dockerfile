@@ -23,6 +23,7 @@ RUN chmod -R a-w /etc
 VOLUME /app
 EXPOSE ${PORT}
 
-USER exec:dev
+# USER exec:dev
+USER dev:dev
 
 ENTRYPOINT ["/app/scripts/startup.sh"]

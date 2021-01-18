@@ -1,12 +1,14 @@
 import os
 import json
+from distutils.dir_util import copy_tree
 
 from django.core.management.base import BaseCommand
 from jinja2 import Environment, FileSystemLoader
 from termcolor import cprint
 
 from config.settings import BASE_DIR
-from leon.validators import validate_options, validate_template
+from leon.validators import validate_options
+from leon.validators import validate_template
 
 
 class ScaffoldCommand(BaseCommand):
@@ -33,13 +35,8 @@ class ScaffoldCommand(BaseCommand):
         with open(LEON_FILE_PATH) as json_file:
             leon = json.load(json_file)
         
-        # Make dirs
-        for app in leon['apps']:
-            print('gg',app['options'])
-            for option, val in app['options'].items():
-                if option.endswith('_dir'):
-                     os.makedirs(val, exist_ok=True)
-            
+        self.create_dirs(leon)
+        self.copy_blueprints(leon)
 
         # # Setup templates
         # template_name = options.get('template_name')
@@ -59,7 +56,33 @@ class ScaffoldCommand(BaseCommand):
         
         cprint(f'Baking done!', 'green')
 
-    
+
+    def create_dirs(self, options):
+        for app in options['apps']:
+            for option, val in app['options'].items():
+                if option.endswith('_dir'):
+                    os.makedirs(val, exist_ok=True)
+                
+                if option == 'blueprints_dir':
+                    for model in app['models']:
+                        model = model['name'].lower()
+                        os.makedirs(f"{val}/{model}", exist_ok=True)
+                    
+
+
+
+    def copy_blueprints(self, options):
+        src = f'{BASE_DIR}/leon/blueprints/graphql/endpoints/'
+        for app in options['apps']:
+            for option, val in app['options'].items():
+                if option == 'blueprints_dir':
+                    for model in app['models']:
+                        model_name = model['name'].lower()
+                        blueprints_dir = app['options']['blueprints_dir']
+                        dst = f"{blueprints_dir}/{model_name}"
+                        copy_tree(src, dst)
+
+
     def generate_template(self, template_dir, template_name, **data):
         env = Environment(loader=FileSystemLoader(template_dir))
         template = env.get_template(template_name)
