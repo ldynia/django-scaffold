@@ -2,3 +2,4 @@ Django
 graphene-django
 graphene-django-extras
 jinja2
+django-filter>=2.4.0 # not directly required, pinned by Snyk to avoid a vulnerability
