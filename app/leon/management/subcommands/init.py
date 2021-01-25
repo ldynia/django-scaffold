@@ -15,6 +15,7 @@ class InitCommand(BaseCommand):
         parser.add_argument('app', type=str, default=None, help='Application name.', nargs='?')
         parser.add_argument('models', type=str, default=None, help='Model name(s).', nargs='*')
 
+        parser.add_argument('--api-type', type=str, default='graphql', help='Path to a file where model is defined.')
         parser.add_argument('--model-filename', type=str, default='models.py', help='Path to a file where model is defined.')
         parser.add_argument('--model-dir-path', type=str, default=None, help='Path to a file where model is defined.')
 
@@ -33,8 +34,9 @@ class InitCommand(BaseCommand):
     def create_json_init(self, **options):
         APP = options.get('app')
         MODEL = options.get('models')[0]
-        APP_OUTPUT_DIR = f"{BASE_DIR}/{APP}/api"
-        APP_BLUEPRINTS_DIR = f"{APP_OUTPUT_DIR}/blueprints"
+        API_TYPE = options.get('api_type')
+        APP_OUTPUT_DIR = f"{BASE_DIR}/{APP}/api/{API_TYPE}/endpoints/{MODEL.lower()}"
+        APP_BLUEPRINTS_DIR = f"{BASE_DIR}/{APP}/api/{API_TYPE}/blueprints/{MODEL.lower()}"
         MODEL_FILENAME = options.get('model_filename')
         MODEL_PATH = f'{BASE_DIR}/{APP}/{MODEL_FILENAME}'
 
@@ -42,17 +44,18 @@ class InitCommand(BaseCommand):
             'apps':  [
                 {
                     'name': APP,
-                    'options': {
-                        'output_dir': APP_OUTPUT_DIR,
-                        'blueprints_dir': APP_BLUEPRINTS_DIR,
-                    },
                     'models': [
                         {
                             'name': MODEL,
                             'path': MODEL_PATH, 
-                            'options': {},
+                            'options': {
+                                API_TYPE: {
+                                    'output_dir': APP_OUTPUT_DIR,
+                                    'blueprints_dir': APP_BLUEPRINTS_DIR,
+                                }
+                            },
                         }
-                    ]
+                    ],
                 }
             ],
         }, indent=2, sort_keys=True)

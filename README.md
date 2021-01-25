@@ -9,7 +9,6 @@ $ umask 113
 
 # Examples
 
-
 ### Queries
 ```
 query {

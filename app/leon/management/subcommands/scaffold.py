@@ -13,7 +13,7 @@ from leon.validators import validate_template
 
 class ScaffoldCommand(BaseCommand):
 
-    help = 'Code bakery.'
+    help = 'Bake templates.'
 
     def add_arguments(self, parser):
         parser.add_argument('json-file', type=str, default='leon.json', help='Leon json file.', nargs='?')
@@ -24,6 +24,7 @@ class ScaffoldCommand(BaseCommand):
         parser.add_argument('--config', type=str, default=f'{BASE_DIR}/leon.js', help='Path to leon.json config.')
         parser.add_argument('--overwrite', type=bool, default=False, help='Overwrite existing scaffolds.')
         
+        parser.add_argument('--api-type', type=str, default='graphql', help='Path to a file where model is defined.')
         parser.add_argument('--template-name', type=str, default='test.leon', help='Path to tamplates directory.')
         parser.add_argument('--template-dir', type=str, default=f'{BASE_DIR}/leon/blueprints/demo', help='Path to tamplates directory.')
         parser.add_argument('--output-path', type=str, default='/tmp/test.py', help='Path to tamplates directory.')
@@ -37,6 +38,7 @@ class ScaffoldCommand(BaseCommand):
         
         self.create_dirs(leon)
         self.copy_blueprints(leon)
+        self.bake_blueprints(leon)
 
         # # Setup templates
         # template_name = options.get('template_name')
@@ -59,28 +61,27 @@ class ScaffoldCommand(BaseCommand):
 
     def create_dirs(self, options):
         for app in options['apps']:
-            for option, val in app['options'].items():
-                if option.endswith('_dir'):
-                    os.makedirs(val, exist_ok=True)
-                
-                if option == 'blueprints_dir':
-                    for model in app['models']:
-                        model = model['name'].lower()
-                        os.makedirs(f"{val}/{model}", exist_ok=True)
-                    
-
+            for model in app['models']:
+                for api_type, settings in model['options'].items():
+                    for setting, value in settings.items():
+                        if setting.endswith('_dir'):
+                            os.makedirs(value, exist_ok=True)
 
 
     def copy_blueprints(self, options):
-        src = f'{BASE_DIR}/leon/blueprints/graphql/endpoints/'
         for app in options['apps']:
-            for option, val in app['options'].items():
-                if option == 'blueprints_dir':
-                    for model in app['models']:
-                        model_name = model['name'].lower()
-                        blueprints_dir = app['options']['blueprints_dir']
-                        dst = f"{blueprints_dir}/{model_name}"
-                        copy_tree(src, dst)
+            for model in app['models']:
+                for api_type, settings in model['options'].items():
+                    src = f"{BASE_DIR}/leon/blueprints/{api_type}/endpoints/"
+                    for setting, value in settings.items():
+                        if setting == 'blueprints_dir':
+                            blueprints_dir = model['options'][api_type][setting]
+                            copy_tree(src, blueprints_dir)
+
+
+    def bake_blueprints(self, options):
+        # TODO: Bake templates
+        pass
 
 
     def generate_template(self, template_dir, template_name, **data):

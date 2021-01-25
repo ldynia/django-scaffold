@@ -4,15 +4,16 @@
       "models": [
         {
           "name": "Dummy",
-          "options": {},
+          "options": {
+            "graphql": {
+              "blueprints_dir": "/app/demo/api/graphql/blueprints/dummy",
+              "output_dir": "/app/demo/api/graphql/endpoints/dummy"
+            }
+          },
           "path": "/app/demo/models.py"
         }
       ],
-      "name": "demo",
-      "options": {
-        "blueprints_dir": "/app/demo/api/blueprints",
-        "output_dir": "/app/demo/api"
-      }
+      "name": "demo"
     }
   ]
 }
