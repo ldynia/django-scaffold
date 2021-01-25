@@ -25,10 +25,9 @@ class InitCommand(BaseCommand):
         if not valid:
             for err in errors:
                 cprint(err, 'yellow')
-        
-        self.create_json_init(**options)
-        
-        cprint(f"Created 'leon.json' file.", 'green')
+        else:
+            self.create_json_init(**options)
+            cprint(f"Created 'leon.json' file.", 'green')
 
 
     def create_json_init(self, **options):
