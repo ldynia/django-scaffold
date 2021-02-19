@@ -25,7 +25,7 @@ def valid_models_arg(**options):
     if not models or models == []:
         valid = False
         error = 'Missing models argument!'
-    
+
     return valid, error
 
 
@@ -38,7 +38,7 @@ def app_exist(**options):
     if app not in normalized_apps:
         valid = False
         error = f"Looks like application {app} is not installed!"
- 
+
     return valid, error
 
 
@@ -49,12 +49,12 @@ def valid_model_path(**options):
     app = options.get('app')
     filename = options.get('model_filename')
     dir_path = options.get('model_dir_path')
-    
+
     if dir_path:
         model_path = f'{dir_path}/{filename}'
     else:
         model_path = f'{BASE_DIR}/{app}/{filename}'
-    
+
     if not os.path.exists(model_path):
         valid = False
         error = f"Model path {model_path} doesn't exist!"
@@ -68,7 +68,7 @@ def valid_model(**options):
 
     app = options.get('app')
     models = options.get('models')
-    
+
     for model in models:
         try:
             apps.get_model(app, model)
@@ -79,19 +79,19 @@ def valid_model(**options):
     return valid, error
 
 
-def validate_template(output_path, template_file):
+def validate_template(output_path, template_file_path):
     valid = True
     error = ''
     try:
         output_dir = '/'.join(output_path.split('/')[:-1])
         assert os.path.exists(output_dir), f"Dir {output_dir} doesn't exist!"
         assert os.access(output_dir, os.W_OK), f"Dir {output_dir} isn't writable!"
-        assert os.path.isfile(template_file), f"File {template_file} isn't a file!"
+        assert os.path.isfile(template_file_path), f"File {template_file} isn't a file!"
         return True
     except AssertionError as err:
         valid = False
         error = err
-    
+
     return valid, error
 
 
@@ -103,12 +103,12 @@ def validate_options(**options):
     if not valid:
         valid_opns = False
         errors.append(msg)
-    
+
     valid, msg = valid_models_arg(**options)
     if not valid:
         valid_opns = False
         errors.append(msg)
-    
+
     valid, msg = app_exist(**options)
     if not valid:
         valid_opns = False
@@ -118,7 +118,7 @@ def validate_options(**options):
     if not valid:
         valid_opns = False
         errors.append(msg)
-    
+
     valid, msg = valid_model(**options)
     if not valid:
         valid_opns = False

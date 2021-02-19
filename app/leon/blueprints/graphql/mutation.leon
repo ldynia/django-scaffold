@@ -1,0 +1,25 @@
+import graphene
+from graphene_django_extras import DjangoSerializerMutation
+from rest_framework.serializers import ModelSerializer
+
+from {{ app }}.models import {{ name }}
+
+
+class {{ name }}Serializer(ModelSerializer):
+
+    class Meta:
+        model = {{ name }}
+        fields = ['day', 'weekday', 'month', 'year', 'pre_seeded']
+
+
+class {{ name }}SerializerMutation(DjangoSerializerMutation):
+
+    class Meta:
+        serializer_class = {{ name }}Serializer
+        description = "Django Rest Framework serializer based Mutation for {{ name }}."
+
+
+class {{ name }}Mutations(graphene.ObjectType):
+    create_{{ name.lower() }} = {{ name }}SerializerMutation.CreateField()
+    update_{{ name.lower() }} = {{ name }}SerializerMutation.UpdateField()
+    delete_{{ name.lower() }} = {{ name }}SerializerMutation.DeleteField()

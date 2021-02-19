@@ -1,12 +1,13 @@
 # TODO: Step 3 create this file
 import graphene
 
-from demo.api.graphql.endpoints.dummy_query import DummyQuery
-from demo.api.graphql.endpoints.dummy_mutation import DummyMutations
+from demo.api.graphql.dummy.query import DummyQuery
+from demo.api.graphql.dummy.mutation import DummyMutations
 
 
 class Queries(DummyQuery):
     pass
+
 
 class Mutations(DummyMutations):
     pass

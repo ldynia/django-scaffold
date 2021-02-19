@@ -7,7 +7,7 @@ from demo.models import Dummy
 
 WEEKDAY = (
     'Monday', 'Tuesday',
-    'Wednesday', 'Thursday', 
+    'Wednesday', 'Thursday',
     'Friday', 'Saturday', 'Sunday'
 )
 
@@ -19,11 +19,12 @@ MONTH = (
 )
 
 class Command(BaseCommand):
+
     help = 'Application seed'
 
     def add_arguments(self, parser):
         pass
-   
+
     def handle(self, *args, **options):
         LIMIT = 1000
         for i in range(LIMIT):
@@ -36,4 +37,4 @@ class Command(BaseCommand):
 
             progress = math.ceil((i/LIMIT) * 100)
             print(f'\rProgress: {progress} %', end='')
-        print()
+        print('')

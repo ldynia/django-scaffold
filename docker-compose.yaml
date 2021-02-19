@@ -4,9 +4,9 @@ services:
     build:
       context: ./app
       dockerfile: ../docker/Dockerfile
-    image: django/scaffold
-    container_name: django-scaffold
-    hostname: django-dev-scaffold
+    image: django/leon
+    container_name: django-leon
+    hostname: dev-leon
     volumes:
        - ./app:/app
     # command: sleep 3600

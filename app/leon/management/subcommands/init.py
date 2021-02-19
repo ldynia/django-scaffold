@@ -35,8 +35,9 @@ class InitCommand(BaseCommand):
         APP = options.get('app')
         MODEL = options.get('models')[0]
         API_TYPE = options.get('api_type')
-        APP_OUTPUT_DIR = f"{BASE_DIR}/{APP}/api/{API_TYPE}/endpoints/{MODEL.lower()}"
-        APP_BLUEPRINTS_DIR = f"{BASE_DIR}/{APP}/api/{API_TYPE}/blueprints/{MODEL.lower()}"
+        MODEL_NAME = MODEL.lower()
+        APP_OUTPUT_DIR = f"{BASE_DIR}/{APP}/api/{API_TYPE}/{MODEL_NAME}"
+        APP_BLUEPRINTS_DIR = f"{BASE_DIR}/{APP}/blueprints/{API_TYPE}/{MODEL_NAME}"
         MODEL_FILENAME = options.get('model_filename')
         MODEL_PATH = f'{BASE_DIR}/{APP}/{MODEL_FILENAME}'
 
@@ -46,12 +47,13 @@ class InitCommand(BaseCommand):
                     'name': APP,
                     'models': [
                         {
+                            'app': APP,
                             'name': MODEL,
                             'path': MODEL_PATH,
                             'options': {
                                 API_TYPE: {
-                                    'output_dir': APP_OUTPUT_DIR,
-                                    'blueprints_dir': APP_BLUEPRINTS_DIR,
+                                    'output_blueprints_dir': APP_OUTPUT_DIR,
+                                    'input_blueprints_dir': APP_BLUEPRINTS_DIR,
                                 }
                             },
                         }
