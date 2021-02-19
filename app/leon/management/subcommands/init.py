@@ -8,9 +8,9 @@ from leon.validators import validate_options
 
 
 class InitCommand(BaseCommand):
-    
+
     help = "Create 'leon.json' from app and its model(s)."
-    
+
     def add_arguments(self, parser):
         parser.add_argument('app', type=str, default=None, help='Application name.', nargs='?')
         parser.add_argument('models', type=str, default=None, help='Model name(s).', nargs='*')
@@ -41,13 +41,13 @@ class InitCommand(BaseCommand):
         MODEL_PATH = f'{BASE_DIR}/{APP}/{MODEL_FILENAME}'
 
         init_json = json.dumps({
-            'apps':  [
+            'apps': [
                 {
                     'name': APP,
                     'models': [
                         {
                             'name': MODEL,
-                            'path': MODEL_PATH, 
+                            'path': MODEL_PATH,
                             'options': {
                                 API_TYPE: {
                                     'output_dir': APP_OUTPUT_DIR,

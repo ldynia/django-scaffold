@@ -1,6 +1,6 @@
 FROM python:3.7.9-alpine
 
-ARG PORT=8000
+ARG PORT=8080
 ENV PORT=$PORT
 
 ENV HOME=/app
@@ -14,9 +14,9 @@ COPY . /app
 RUN sed -i '/999/d;' /etc/group
 RUN addgroup -S -g 999 exec && adduser -u 999 -s /sbin/nologin -SDHG exec exec
 RUN adduser -DH dev && adduser exec dev
-RUN chown -R exec:dev \ 
-    /app \ 
-    /usr/local/bin/ \ 
+RUN chown -R exec:dev \
+    /app \
+    /usr/local/bin/ \
     /usr/local/lib/python3.7/
 RUN chmod -R a-w /etc
 

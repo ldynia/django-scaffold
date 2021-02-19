@@ -8,12 +8,12 @@ from leon.utilities import animate
 
 
 class DocsCommand(BaseCommand):
-    
-    help = "Leon API."
+
+    help = "Leon API documentation."
 
     def handle(self, *args, **options):
         animate(SEQUENCE, delay=0.2)
-        
+
         print("Ultimate Code bakery!\n")
-        
+
         os.system(f"python {BASE_DIR}/manage.py leon --help")
