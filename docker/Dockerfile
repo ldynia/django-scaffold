@@ -1,4 +1,4 @@
-FROM python:3.7.9-alpine
+FROM python:3.9.4-alpine
 
 ARG PORT=8000
 ENV PORT=$PORT
